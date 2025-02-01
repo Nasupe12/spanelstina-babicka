@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Španělština - Čeština</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game">
+        <h1>Španělština - Čeština</h1>
+        <div id="spanyol" class="dropdown">
+            <button class="dropbtn">Vyberte španělské slovo</button>
+            <div class="dropdown-content">
+                <a href="#" onclick="startGame('Aconcechar', 'Navrhnout, Doporučit')">Aconcechar</a>
+                <a href="#" onclick="startGame('Recomendar', 'Doporučit')">Recomendar</a>
+                <a href="#" onclick="startGame('Ferrocarril', 'Železnice, Vlak')">Ferrocarril</a>
+                <!-- Další slova -->
+            </div>
+        </div>
+
+        <div id="question" class="question">
+            <!-- Sem se bude zobrazovat otázka -->
+        </div>
+
+        <input type="text" id="answer" placeholder="Napište odpověď">
+        <button onclick="checkAnswer()">Zkontrolovat odpověď</button>
+
+        <div id="feedback"></div>
+
+        <div id="results" style="display:none;">
+            <p id="correctCount">Správně: 0</p>
+            <p id="incorrectCount">Špatně: 0</p>
+            <button onclick="resetGame()">Opakovat</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
