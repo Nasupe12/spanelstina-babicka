@@ -1,40 +1,49 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Španělština - Čeština</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Překladová hra</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="game">
-        <h1>Španělština - Čeština</h1>
-        <div id="spanyol" class="dropdown">
-            <button class="dropbtn">Vyberte španělské slovo</button>
-            <div class="dropdown-content">
-                <a href="#" onclick="startGame('Aconcechar', 'Navrhnout, Doporučit')">Aconcechar</a>
-                <a href="#" onclick="startGame('Recomendar', 'Doporučit')">Recomendar</a>
-                <a href="#" onclick="startGame('Ferrocarril', 'Železnice, Vlak')">Ferrocarril</a>
-                <!-- Další slova -->
-            </div>
-        </div>
+  <!-- Výběr režimu překladu -->
+  <div id="modeSelection">
+    <h1>Vyber směr překladu</h1>
+    <button onclick="chooseMode('sp2cz')">Španělština → Čeština</button>
+    <button onclick="chooseMode('cz2sp')">Čeština → Španělština</button>
+  </div>
 
-        <div id="question" class="question">
-            <!-- Sem se bude zobrazovat otázka -->
-        </div>
+  <!-- Hlavní část hry (skryta, dokud se nevybere režim) -->
+  <div id="game" style="display: none;">
+    <h1 id="gameTitle"></h1>
 
-        <input type="text" id="answer" placeholder="Napište odpověď">
-        <button onclick="checkAnswer()">Zkontrolovat odpověď</button>
-
-        <div id="feedback"></div>
-
-        <div id="results" style="display:none;">
-            <p id="correctCount">Správně: 0</p>
-            <p id="incorrectCount">Špatně: 0</p>
-            <button onclick="resetGame()">Opakovat</button>
-        </div>
+    <!-- Dropdown s výběrem slova -->
+    <div id="wordSelector" class="dropdown">
+      <button class="dropbtn" id="dropbtn">Vyberte slovo</button>
+      <div class="dropdown-content" id="dropdownContent">
+        <!-- Možnosti se doplní dynamicky podle režimu -->
+      </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Zobrazení otázky -->
+    <div id="question" class="question"></div>
+
+    <!-- Textové pole pro odpověď -->
+    <input type="text" id="answer" placeholder="Napiš překlad">
+    <button onclick="checkAnswer()">Zkontrolovat odpověď</button>
+
+    <!-- Okamžitá zpětná vazba -->
+    <div id="feedback"></div>
+
+    <!-- Výsledky po sérii (můžeš přizpůsobit, kdy se zobrazí) -->
+    <div id="results">
+      <p id="correctCount">Správně: 0</p>
+      <p id="incorrectCount">Špatně: 0</p>
+      <button onclick="restartGame()">Opakovat</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
