@@ -1,41 +1,94 @@
-let correctAnswers = 0;
-let incorrectAnswers = 0;
-let currentWord = '';
-let currentAnswer = '';
-
-function startGame(spanish, czech) {
-    currentWord = spanish;
-    currentAnswer = czech;
-
-    document.getElementById("question").innerText = `Přeložte: ${currentWord}`;
-    document.getElementById("feedback").innerText = '';
-    document.getElementById("answer").value = '';
-    document.getElementById("results").style.display = 'none';
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+  background-color: #f0f0f0;
 }
 
-function checkAnswer() {
-    const userAnswer = document.getElementById("answer").value.trim();
-
-    if (userAnswer.toLowerCase() === currentAnswer.toLowerCase()) {
-        document.getElementById("feedback").innerText = 'Správně!';
-        document.getElementById("feedback").className = 'correct';
-        correctAnswers++;
-    } else {
-        document.getElementById("feedback").innerText = `Špatně! Správně: ${currentAnswer}`;
-        document.getElementById("feedback").className = 'incorrect';
-        incorrectAnswers++;
-    }
-
-    document.getElementById("answer").disabled = true;
-
-    setTimeout(function () {
-        document.getElementById("answer").disabled = false;
-        document.getElementById("answer").value = '';
-    }, 1000);
+h1 {
+  color: #333;
 }
 
-function resetGame() {
-    document.getElementById("correctCount").innerText = `Správně: ${correctAnswers}`;
-    document.getElementById("incorrectCount").innerText = `Špatně: ${incorrectAnswers}`;
-    document.getElementById("results").style.display = 'block';
+#modeSelection button {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+#game {
+  margin-top: 30px;
+}
+
+/* Styl pro dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 220px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.question {
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+#answer {
+  padding: 10px;
+  font-size: 16px;
+  width: 300px;
+  margin-top: 10px;
+}
+
+#feedback {
+  font-size: 18px;
+  margin-top: 20px;
+  height: 24px; /* pro udržení místa */
+}
+
+.correct {
+  color: green;
+}
+
+.incorrect {
+  color: red;
+}
+
+#results {
+  margin-top: 30px;
+  font-size: 18px;
 }
