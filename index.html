@@ -3,47 +3,101 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Překladová hra</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Procvičování španělštiny</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; }
+    #word-container { font-size: 24px; margin: 20px; }
+    #result { font-size: 20px; margin: 10px; }
+    .correct { color: green; }
+    .incorrect { color: red; }
+  </style>
 </head>
 <body>
-  <!-- Výběr režimu překladu -->
-  <div id="modeSelection">
-    <h1>Vyber směr překladu</h1>
-    <button onclick="chooseMode('sp2cz')">Španělština → Čeština</button>
-    <button onclick="chooseMode('cz2sp')">Čeština → Španělština</button>
-  </div>
+  <h1>Procvičování španělských slovíček</h1>
+  <!-- Zobrazí se španělské slovíčko -->
+  <div id="word-container"></div>
+  <!-- Očekává se český překlad -->
+  <input type="text" id="answer" placeholder="Zadej český překlad">
+  <button onclick="checkAnswer()">Odeslat</button>
+  <div id="result"></div>
+  <div id="score"></div>
+  <button onclick="restart()" style="display: none;">Opakovat</button>
 
-  <!-- Hlavní část hry (skryta, dokud se nevybere režim) -->
-  <div id="game" style="display: none;">
-    <h1 id="gameTitle"></h1>
-
-    <!-- Dropdown s výběrem slova -->
-    <div id="wordSelector" class="dropdown">
-      <button class="dropbtn" id="dropbtn">Vyberte slovo</button>
-      <div class="dropdown-content" id="dropdownContent">
-        <!-- Možnosti se doplní dynamicky podle režimu -->
-      </div>
-    </div>
-
-    <!-- Zobrazení otázky -->
-    <div id="question" class="question"></div>
-
-    <!-- Textové pole pro odpověď -->
-    <input type="text" id="answer" placeholder="Napiš překlad">
-    <button onclick="checkAnswer()">Zkontrolovat odpověď</button>
-
-    <!-- Okamžitá zpětná vazba -->
-    <div id="feedback"></div>
-
-    <!-- Výsledky po sérii (můžeš přizpůsobit, kdy se zobrazí) -->
-    <div id="results">
-      <p id="correctCount">Správně: 0</p>
-      <p id="incorrectCount">Špatně: 0</p>
-      <button onclick="restartGame()">Opakovat</button>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
+  <script>
+    // Pole s překládacími páry: es = španělské slovíčko, cz = český překlad
+    const words = [
+      { es: "Aconcechar", cz: "Navrhnout" },
+      { es: "Recomendar", cz: "Doporučit" },
+      { es: "Ferrocarril", cz: "Železnice" },
+      { es: "Guía", cz: "Vést" },
+      { es: "Anden", cz: "Nástupiště" },
+      { es: "Retraso", cz: "Zpoždění" },
+      { es: "Asunto", cz: "Případ" },
+      { es: "Multitud", cz: "Hodně" },
+      { es: "Abrar", cz: "Obejmout" },
+      { es: "Rica", cz: "Bohatý" }
+    ];
+    
+    let shuffledWords, correctAnswers = 0;
+    
+    // Zamíchání pole slov
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+    
+    // Spuštění kvízu
+    function startQuiz() {
+      shuffledWords = shuffle([...words]);
+      correctAnswers = 0;
+      document.querySelector("button[onclick='restart()']").style.display = "none";
+      document.getElementById("score").innerHTML = "";
+      nextWord();
+    }
+    
+    // Načte další slovo ze zamíchaného pole
+    function nextWord() {
+      if (shuffledWords.length > 0) {
+        let wordPair = shuffledWords.pop();
+        // Zobrazí se španělské slovíčko
+        document.getElementById("word-container").textContent = wordPair.es;
+        // Vymaže se předchozí odpověď
+        document.getElementById("answer").value = "";
+        // Uloží se správná odpověď (český překlad) do atributu inputu
+        document.getElementById("answer").setAttribute("data-correct", wordPair.cz);
+        document.getElementById("result").textContent = "";
+      } else {
+        document.getElementById("word-container").textContent = "Hotovo!";
+        document.getElementById("score").innerHTML = `Úspěšnost: ${correctAnswers} / ${words.length}`;
+        document.querySelector("button[onclick='restart()']").style.display = "block";
+      }
+    }
+    
+    // Kontrola zadané odpovědi
+    function checkAnswer() {
+      let userAnswer = document.getElementById("answer").value.trim();
+      let correctAnswer = document.getElementById("answer").getAttribute("data-correct");
+      let resultElement = document.getElementById("result");
+      
+      if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+        resultElement.textContent = "Správně!";
+        resultElement.className = "correct";
+        correctAnswers++;
+      } else {
+        resultElement.textContent = `Špatně! Správná odpověď: ${correctAnswer}`;
+        resultElement.className = "incorrect";
+      }
+      
+      // Po 1,5 sekundě se načte další slovo
+      setTimeout(nextWord, 1500);
+    }
+    
+    // Restartování kvízu
+    function restart() {
+      startQuiz();
+    }
+    
+    // Spuštění kvízu při načtení stránky
+    startQuiz();
+  </script>
 </body>
 </html>
